@@ -20,11 +20,6 @@ on:
 env:
   TFACTION_IS_APPLY: 'false'
 
-permissions:
-  id-token: write
-  contents: read
-  pull-requests: write
-
 jobs:
   plan:
     name: "plan (${{matrix.target.target}})"
