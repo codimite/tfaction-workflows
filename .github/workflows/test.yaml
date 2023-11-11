@@ -4,6 +4,7 @@ on:
   workflow_call:
     inputs:
       targets:
+        type: string
         required: false
     secrets:
       gh_token:
