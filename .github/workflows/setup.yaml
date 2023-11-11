@@ -10,7 +10,8 @@ on:
       gh_app_private_key:
         required: false
     outputs:
-      targets: ${{jobs.setup.outputs.targets}}
+      targets:
+        value: ${{jobs.setup.outputs.targets}}
 
 permissions:
   id-token: write
