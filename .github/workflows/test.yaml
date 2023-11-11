@@ -25,7 +25,6 @@ jobs:
   plan:
     name: "plan (${{matrix.target.target}})"
     runs-on: ${{matrix.target.runs_on}}
-    needs: setup
     # if services is empty, the build job is skipped
     if: "join(fromJSON(inputs.targets), '') != ''"
     strategy:
