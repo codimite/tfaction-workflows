@@ -12,6 +12,11 @@ on:
     outputs:
       targets: ${{jobs.setup.outputs.targets}}
 
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
 jobs:
   setup:
     runs-on: ubuntu-latest
