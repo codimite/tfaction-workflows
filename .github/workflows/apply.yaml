@@ -2,6 +2,9 @@
 name: apply
 on:
   workflow_call:
+    inputs:
+      targets:
+        required: false
     secrets:
       gh_token:
         required: false
@@ -13,6 +16,7 @@ on:
         required: false
       secrets:
         required: false
+      
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   TFACTION_IS_APPLY: 'true'
@@ -28,11 +32,11 @@ permissions:
     runs-on: ${{matrix.target.runs_on}}
     needs: setup
     # if services is empty, the build job is skipped
-    if: "join(fromJSON(needs.setup.outputs.targets), '') != ''"
+    if: "join(fromJSON(inputs.targets), '') != ''"
     strategy:
       fail-fast: false
       matrix:
-        target: ${{fromJSON(needs.setup.outputs.targets)}}
+        target: ${{fromJSON(inputs.targets)}}
     env:
       TFACTION_TARGET: ${{matrix.target.target}}
       TFACTION_JOB_TYPE: ${{matrix.target.job_type}}
