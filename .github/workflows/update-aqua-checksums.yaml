@@ -2,6 +2,10 @@
 name: update-aqua-checksums
 on:
   workflow_call:
+    inputs:
+      ref:
+        required: false
+        type: string
     secrets:
       gh_token:
         required: false
@@ -16,8 +20,9 @@ jobs:
     permissions:
       contents: read
     with:
-      aqua_version: v2.16.4
+      aqua_version: v2.17.1
       prune: true
+      ref: ${{inputs.ref}}
     secrets:
       gh_token: ${{secrets.gh_token}}
       gh_app_id: ${{secrets.gh_app_id}}
