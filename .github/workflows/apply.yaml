@@ -2,9 +2,6 @@
 name: apply
 on:
   workflow_call:
-    inputs:
-      targets:
-        required: false
     secrets:
       gh_token:
         required: false
@@ -21,7 +18,7 @@ on:
       
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.gh_token }}
   TFACTION_IS_APPLY: 'true'
 
 jobs:
@@ -57,8 +54,8 @@ jobs:
         id: generate_token
         uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
         with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          app_id: ${{ secrets.gh_app_id }}
+          private_key: ${{ secrets.gh_app_private_key }}
 
       - uses: aquaproj/aqua-installer@928a2ee4243a9ee8312d80dc8cbaca88fb602a91 # v2.2.0
         with:
@@ -66,7 +63,7 @@ jobs:
 
       - uses: suzuki-shunsuke/tfaction/export-secrets@5731fade20e41c1905c04095f0e3d68fac14a636 # v0.7.3
         with:
-          secrets: ${{ toJSON(secrets) }}
+          secrets: ${{secrets.secrets}}
 
       # This is required to download private modules in `terraform init`
       - run: gh auth setup-git
