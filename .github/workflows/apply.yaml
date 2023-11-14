@@ -89,14 +89,21 @@ jobs:
         env:
           TFE_TOKEN: ${{secrets.tfe_token}}
           TF_TOKEN_app_terraform_io: ${{secrets.tfe_token}}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
 
       - uses: suzuki-shunsuke/tfaction/create-follow-up-pr@5731fade20e41c1905c04095f0e3d68fac14a636 # v0.7.3
         if: failure()
         with:
           github_app_token: ${{ steps.generate_token.outputs.token }}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+
 
       - uses: suzuki-shunsuke/tfaction/update-drift-issue@5731fade20e41c1905c04095f0e3d68fac14a636 # v0.7.3
         if: always()
         with:
           status: ${{job.status}}
           github_token: ${{steps.generate_token.outputs.token}}
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+
