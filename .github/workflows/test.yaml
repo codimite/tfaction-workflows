@@ -9,6 +9,8 @@ on:
         required: false
       gh_app_private_key:
         required: false
+      tfe_token:
+        required: false
       terraform_private_module_ssh_key: # This isn't needed if you don't use SSH key to checkout private Terraform Modules
         required: false
       secrets:
@@ -84,7 +86,8 @@ jobs:
         with:
           github_app_token: ${{steps.token.outputs.token}}
           ssh_key: ${{secrets.terraform_private_module_ssh_key}} # This isn't needed if you don't use SSH key to checkout private Terraform Modules
-
+        env:
+          TFE_TOKEN: ${{secrets.tfe_token}}
       - uses: suzuki-shunsuke/tfaction/get-target-config@26effa08b92b77b5cfe04e2a25c15845fd00b04f # v0.7.2
         id: target-config
 
