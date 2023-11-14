@@ -12,6 +12,8 @@ on:
         required: false
       gh_app_private_key:
         required: false
+      tfe_token:
+        required: false
       terraform_private_module_ssh_key: # This isn't needed if you don't use SSH key to checkout private Terraform Modules
         required: false
       secrets:
@@ -71,10 +73,16 @@ permissions:
         with:
           github_app_token: ${{ steps.generate_token.outputs.token }}
           ssh_key: ${{ secrets.TERRAFORM_PRIVATE_MODULE_SSH_KEY }} # This isn't needed if you don't use SSH key to checkout private Terraform Modules
+        env:
+          TFE_TOKEN: ${{secrets.tfe_token}}
+          TF_TOKEN_app_terraform_io: ${{secrets.tfe_token}}
 
       - uses: suzuki-shunsuke/tfaction/apply@5731fade20e41c1905c04095f0e3d68fac14a636 # v0.7.3
         with:
           github_app_token: ${{ steps.generate_token.outputs.token }}
+        env:
+          TFE_TOKEN: ${{secrets.tfe_token}}
+          TF_TOKEN_app_terraform_io: ${{secrets.tfe_token}}
 
       - uses: suzuki-shunsuke/tfaction/create-follow-up-pr@26effa08b92b77b5cfe04e2a25c15845fd00b04f # v0.7.2
         if: failure()
