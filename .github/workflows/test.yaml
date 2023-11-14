@@ -109,12 +109,6 @@ jobs:
           github-comment exec -var "tfaction_target:$TFACTION_TARGET" -- terraform version -json | github-comment exec -- tfprovidercheck
         working-directory: ${{ steps.target-config.outputs.working_directory }}
         env:
-          TFPROVIDERCHECK_CONFIG_BODY: |
-            providers:
-              - name: registry.terraform.io/hashicorp/google
-              - name: registry.terraform.io/hashicorp/aws
-              - name: registry.terraform.io/hashicorp/null
-              - name: registry.terraform.io/integrations/github
           GITHUB_TOKEN: ${{steps.token.outputs.token}} # For github-comment
 
       - uses: suzuki-shunsuke/tfaction/test@5731fade20e41c1905c04095f0e3d68fac14a636 # v0.7.3
